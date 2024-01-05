@@ -37,7 +37,7 @@ async function singleMovie() {
                 <h2>${data.Title}</h2>
             </div>
             <div class="dh-rs">
-                <i class="fa-solid fa-bookmark" onClick=addTofavorites('${id}') style="cursor: pointer;"></i>
+                <i class="fa-regular fa-heart"  onClick=addTofavorites('${id}',this) style="cursor: pointer;"></i>
             </div>
         </div>
         <span class="italics-text"><i>${data.Year} &#x2022; ${data.Country} &#x2022; Rating - <span
