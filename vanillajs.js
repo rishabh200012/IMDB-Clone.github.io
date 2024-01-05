@@ -10,12 +10,12 @@ fetch('http://www.omdbapi.com/?i=tt3896198&apikey=48aa722f')
     .then(res => res.json())
     .then(data => console.log(data));
 
-// Upon keypress - function findMovies is initiated
+
 searchInput.addEventListener('input', findMovies);
 
 
 async function singleMovie() {
-    // Finding ID of the movie from the URL
+    
     var urlQueryParams = new URLSearchParams(window.location.search);
     var id = urlQueryParams.get('id')
     console.log(id);
@@ -25,7 +25,7 @@ async function singleMovie() {
     console.log(data);
     console.log(url);
 
-    // Making the output html by string interpolition
+    
     var output = `
 
     <div class="movie-poster">
@@ -60,7 +60,7 @@ async function singleMovie() {
         </p>
     </div> 
     `
-    // Appending the output
+    
     document.querySelector('.movie-container').innerHTML = output
 
 }
@@ -68,29 +68,29 @@ async function singleMovie() {
 async function addTofavorites(id,ele) {
     console.log("fav-item", id);
      ele.style.color='red';  
-    localStorage.setItem(Math.random().toString(36).slice(2, 7), id);// math.random for the unique key and value pair
+    localStorage.setItem(Math.random().toString(36).slice(2, 7), id);
     alert('Movie Added to Watchlist!');
 }
 
-//Removing the movie from the favorites list  and also from the localstorage
+
 async function removeFromfavorites(id) {
     console.log(id);
     for (i in localStorage) {
-        // If the ID passed as argument matches with value associated with key, then removing it 
+        
         if (localStorage[i] == id) {
             localStorage.removeItem(i)
             break;
         }
     }
-    //Alerting the user and refreshing the page
+    
     alert('Movie Removed from Watchlist');
     window.location.replace('addfav.html');
 }
 
-//Displaying the movie list on the search page according to the user list
+
 async function displayMovieList(movies) {
     var output = '';
-    //Traversing over the movies list which is passed as an argument to our function
+    
     for (i of movies) {
 
         var img = '';
@@ -102,7 +102,7 @@ async function displayMovieList(movies) {
         }
         var id = i.imdbID;
 
-        //Appending the output through string interpolition
+        
         output += `
 
         <div class="fav-item">
@@ -124,34 +124,34 @@ async function displayMovieList(movies) {
 
        `
     }
-    //Appending this to the movie-display class of our html page
+    
     document.querySelector('.fav-container').innerHTML = output;
     console.log("here is movie list ..", movies);
 }
 
 
 
-//When the user is searching for the movie then a list of the related movie will be displayed and that list is fetched
+
 async function findMovies() {
     const url = `https://www.omdbapi.com/?s=${(searchInput.value).trim()}&page=1&apikey=${key}`
     const res = await fetch(`${url}`);
     const data = await res.json();
 
     if (data.Search) {
-        //Calling the function to display list of the movies related to the user search
+        
         displayMovieList(data.Search)
     }
 }
 
-//Favorites movies are loaded on to the fav page from localstorage
+
 async function favoritesMovieLoader() {
 
     var output = ''
-    //Traversing over all the movies in the localstorage
+
     for (i in localStorage) {
         var id = localStorage.getItem(i);
         if (id != null) {
-            //Fetching the movie through id 
+            
             const url = `https://www.omdbapi.com/?i=${id}&plot=full&apikey=${key}`
             const res = await fetch(`${url}`);
             const data = await res.json();
@@ -164,7 +164,7 @@ async function favoritesMovieLoader() {
             }
             else { img = data.Title }
             var Id = data.imdbID;
-            //Adding all the movie html in the output using interpolition
+            
             output += `
 
         <div class="fav-item">
@@ -189,7 +189,7 @@ async function favoritesMovieLoader() {
         }
 
     }
-    //Appending the html to the movie-display class in favorites page 
+    
     document.querySelector('.fav-container').innerHTML = output;
 }
 
